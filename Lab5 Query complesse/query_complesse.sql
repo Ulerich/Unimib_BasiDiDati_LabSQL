@@ -141,3 +141,21 @@ WHERE cl.tipologia = 'Triennale' AND c.Codice_c NOT IN (
         FROM esame AS e1
         ); -- Non funzionante
 
+-- Query 17 -- Non funzionante
+SELECT c.Codice_c, c.Nome, AVG(e.Voto) AS media, COUNT(s.Matricola_st) AS n_studenti
+FROM 
+WHERE cl.tipologia = 'Magistrale'
+GROUP BY c.Codice_c, c.Nome
+HAVING n_studenti >= 60
+ORDER BY media;
+
+SELECT c.Codice_c, c.Nome, AVG(e.Voto) AS media, COUNT(*) AS numero_studenti
+FROM Corso AS c
+	JOIN Esame AS e ON e.Codice_corso = c.Codice_c
+	JOIN Studente AS s ON e.Matricola_studente = s.Matricola_st
+	JOIN Corso_di_Laurea_corsi AS cl ON cl.Codice_c = c.Codice_c
+    JOIN corso_di_laurea AS cdl ON cl.idCorso_di_Laurea = cdl.idCorso_di_Laurea
+WHERE cdl.Tipologia = 'Magistrale'
+GROUP BY c.Codice_c, c.Nome
+HAVING numero_studenti >= 60
+ORDER BY media DESC;
